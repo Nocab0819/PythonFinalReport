@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>拼字遊戲</title>
+</head>
+<body>
+    <h1>拼字遊戲</h1>
+    <h2>回合: {{ current_round }} / {{ rounds }}</h2>
+    <h3>分數: {{ score }}</h3>
+
+    {% if word %}
+        <h4>目前單字: {{ word }}</h4>
+        <p>請根據下面的字母打亂順序後的單字進行拼字:</p>
+        <p>{{ scrambled_word }}</p>
+        <form method="POST" action="/play">
+            <label for="answer">輸入答案:</label>
+            <input type="text" id="answer" name="answer" required>
+            <input type="submit" value="提交答案">
+        </form>
+    {% else %}
+        <h4>遊戲結束</h4>
+        <p>您的最終分數: {{ score }}</p>
+        <p>是否再玩一次？</p>
+        <form method="POST" action="/play">
+            <input type="submit" value="再玩一次">
+        </form>
+    {% endif %}
+</body>
+</html>
