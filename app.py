@@ -3,15 +3,14 @@ import os
 import random
 
 app = Flask(__name__)
+# 生成一個 24 個字節的隨機字串作為密鑰
 app.secret_key = os.urandom(24)
 
-# 可自行設定回合數和文字內容
-rounds = 3
-words = ['apple', 'banana', 'cherry', 'orange', 'mango']
+questions = 10
+used_words = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # 如果收到 POST 請求，將使用者導向遊戲頁面
     if request.method == 'POST':
         return redirect(url_for('game'))
     else:
@@ -20,43 +19,64 @@ def index():
 
 @app.route('/game', methods=['GET', 'POST'])
 def game():
-    # 檢查是否有計分的會話，若無則初始化相關會話變數
     if 'score' not in session:
         session['score'] = 0
         session['current_round'] = 1
-        session['current_word'] = random.choice(words)
+        session['current_word'] = get_random_word()
         session['shuffled_word'] = list(session['current_word'])
         random.shuffle(session['shuffled_word'])
         session['shuffled_word'] = ''.join(session['shuffled_word'])
 
     if request.method == 'POST':
-        # 取得使用者輸入的單字並轉換為小寫
         user_word = request.form['word'].lower()
         if user_word == session['current_word']:
             session['score'] += 1
 
-        if session['current_round'] < rounds:
-            # 若還有回合，則更新相關會話變數
+        if session['current_round'] < questions:
             session['current_round'] += 1
-            session['current_word'] = random.choice(words)
+            session['current_word'] = get_random_word()
             session['shuffled_word'] = list(session['current_word'])
             random.shuffle(session['shuffled_word'])
             session['shuffled_word'] = ''.join(session['shuffled_word'])
         else:
-            # 若回合結束，導向分數結果頁面
             return redirect('/score/result')
 
-    return render_template('game.html', shuffled_word=session['shuffled_word'], round=session['current_round'])
+    return render_template('game.html', shuffled_word=session['shuffled_word'], question=session['current_round'])
 
 @app.route('/score/result', methods=['GET', 'POST'])
 def show_score():
     if request.method == 'POST':
-        # 若收到 POST 請求，則清除會話並重新導向遊戲頁面
         session.clear()
         return redirect(url_for('game'))
 
     score = session['score']
-    return render_template('score.html', score=score, rounds=rounds)
+    if score >= 6:
+        message = "You Pass!"
+    else:
+        message = "You Failed"
+    return render_template('score.html', score=score, questions=questions, message=message)
+
+
+def get_words():
+    words = [
+        'apple', 'banana', 'cherry', 'orange', 'mango',
+        'strawberry', 'kiwi', 'pineapple', 'grape',
+        'blueberry', 'pear', 'peach', 'avocado',
+        'coconut', 'papaya', 'guava', 'watermelon'
+    ]
+    return words
+
+def get_random_word():
+    available_words = [word for word in get_words() if word not in used_words]
+    if len(available_words) == 0:
+        # 若所有單字都已經用過，則重新開始遊戲並重置已用單字列表
+        global used_words
+        used_words = []
+        return random.choice(get_words())
+    else:
+        word = random.choice(available_words)
+        used_words.append(word)
+        return word
 
 
 if __name__ == '__main__':
