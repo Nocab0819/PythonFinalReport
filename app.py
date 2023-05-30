@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import os
 import random
 
@@ -13,7 +13,7 @@ words = ['apple', 'banana', 'cherry', 'orange', 'mango']
 def index():
     # 如果收到 POST 請求，將使用者導向遊戲頁面
     if request.method == 'POST':
-        return redirect('/game')
+        return redirect(url_for('game'))
     else:
         session.clear()
         return render_template('welcome.html')
@@ -53,7 +53,7 @@ def show_score():
     if request.method == 'POST':
         # 若收到 POST 請求，則清除會話並重新導向遊戲頁面
         session.clear()
-        return redirect('/game')
+        return redirect(url_for('game'))
 
     score = session['score']
     return render_template('score.html', score=score, rounds=rounds)
