@@ -1,5 +1,12 @@
+"""
+檔名：word_game.py
+功能：以pygame實現拼字遊戲的基礎架構
+
+包含單回合內題目不重複、顯示分數、再玩一次功能
+"""
 import pygame
 import random
+from words import word_list
 
 # 初始化 Pygame
 pygame.init()
@@ -19,12 +26,10 @@ GRAY = (200, 200, 200)
 FONT_SIZE = 40
 font = pygame.font.Font(None, FONT_SIZE)
 
-# 單字庫
-word_list = ["apple", "banana", "cherry", "durian", "elderberry", "fig", "grape"]
-
 # 生成單字和打亂字母順序
-def generate_word():
-    word = random.choice(word_list)
+def generate_word(used_words):
+    available_words = list(set(word_list) - set(used_words))
+    word = random.choice(available_words)
     word_letters = list(word)
     random.shuffle(word_letters)
     scrambled_word = "".join(word_letters)
@@ -32,10 +37,12 @@ def generate_word():
 
 # 遊戲迴圈
 score = 0
-rounds = 3
+rounds = 10
+used_words = []
 
 for _ in range(rounds):
-    word, scrambled_word = generate_word()
+    word, scrambled_word = generate_word(used_words)
+    used_words.append(word)
     input_text = ""
     confirmed = False
 
@@ -88,8 +95,10 @@ while True:
             mouse_pos = pygame.mouse.get_pos()
             if replay_button_rect.collidepoint(mouse_pos):
                 score = 0  # 重置分數
+                used_words = []  # 重置已使用的單字清單
                 for _ in range(rounds):  # 再玩一次
-                    word, scrambled_word = generate_word()
+                    word, scrambled_word = generate_word(used_words)
+                    used_words.append(word)
                     input_text = ""
                     confirmed = False
                     while True:
@@ -122,7 +131,7 @@ while True:
             elif exit_button_rect.collidepoint(mouse_pos):
                 pygame.quit()
                 quit()
-
+    
     # 重新設定結束畫面
     window.fill(WHITE)
     replay_button_surface = font.render("Play Again", True, BLACK)
