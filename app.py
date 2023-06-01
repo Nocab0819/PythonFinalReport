@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 import os
 import random
+from setmode.config import get_words
 
 app = Flask(__name__)
 # 生成一個 24 個字節的隨機字串作為密鑰
@@ -8,6 +9,7 @@ app.secret_key = os.urandom(24)
 
 questions = 10
 used_words = []
+wrong_words = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -20,6 +22,7 @@ def index():
 @app.route('/game', methods=['GET', 'POST'])
 def game():
     if 'score' not in session:
+        wrong_words.clear()
         session['score'] = 0
         session['current_round'] = 1
         session['current_word'] = get_random_word()
@@ -31,6 +34,8 @@ def game():
         user_word = request.form['word'].lower()
         if user_word == session['current_word']:
             session['score'] += 1
+        else:
+            wrong_words.append(session['current_word'])
 
         if session['current_round'] < questions:
             session['current_round'] += 1
@@ -45,6 +50,7 @@ def game():
 
 @app.route('/score/result', methods=['GET', 'POST'])
 def show_score():
+    used_words.clear()
     if request.method == 'POST':
         session.clear()
         return redirect(url_for('game'))
@@ -54,17 +60,7 @@ def show_score():
         message = "You Pass!"
     else:
         message = "You Failed"
-    return render_template('score.html', score=score, questions=questions, message=message)
-
-
-def get_words():
-    words = [
-        'apple', 'banana', 'cherry', 'orange', 'mango',
-        'strawberry', 'kiwi', 'pineapple', 'grape',
-        'blueberry', 'pear', 'peach', 'avocado',
-        'coconut', 'papaya', 'guava', 'watermelon'
-    ]
-    return words
+    return render_template('score.html', score=score, questions=questions, message=message, wrong_words=wrong_words)
 
 def get_random_word():
     available_words = [word for word in get_words() if word not in used_words]

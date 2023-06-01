@@ -10,6 +10,16 @@
     <h1>Spelling Game</h1>
     <h2>Final Score: {{ score }}</h2>
     <h2>{{ message }}</h2>
+    <h2>Correction of Incorrect Words: </h2>
+    {% if wrong_words %}
+    <ul>
+        {% for word in wrong_words %}
+        <li>{{ word }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No wrong words.</p>
+    {% endif %}
     <form method="POST">
         <button type="submit">Play Again</button>
     </form>    
