@@ -3,36 +3,67 @@
     功能：展示拼字遊戲的得分頁面，包括最終得分、通關訊息和錯字訂正。
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Spelling Game - Score</title>
-    <style>
-        /* 在這裡放置你的 CSS 樣式 */
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Game</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-    <!-- 標題 -->
-    <h1>Spelling Game</h1>
-    <!-- 得分 -->
-    <h2>Final Score: {{ score }}</h2>
-    <!-- 通關訊息 -->
-    <h2>{{ message }}</h2>
-    <!-- 錯字訂正 -->
-    <h2>Correction of Incorrect Words: </h2>
-    <!-- 若有錯字，給錯字列表 -->
-    {% if wrong_words %}
-    <ul>
-        {% for word in wrong_words %}
-        <li>{{ word }}</li>
-        {% endfor %}
-    </ul>
-    <!-- 若無錯字，給無錯字訊息 -->
-    {% else %}
-    <p>No wrong words.</p>
-    {% endif %}
-    <!-- 再玩一次按鈕 -->
-    <form method="POST">
-        <button type="submit">Play Again</button>
-    </form>    
+    <header class="pt-5">
+        <div class="container pt-4 pt-xl-5">
+            <div class="row pt-5" style="margin-top: -72px;">
+                <div class="col-md-8 text-center text-md-start mx-auto">
+                    <div class="text-center">
+                        <!-- 標題 -->
+                        <h1 class="display-4 fw-bold mb-5"><span style="color: rgb(0, 114, 198);">S</span><span
+                                style="color: rgb(0, 163, 221);">pelling</span><span style="color: rgb(0, 0, 0);">
+                            </span><span style="color: rgb(0, 114, 198);">G</span><span
+                                style="color: rgb(0, 163, 221);">ame</span>
+                            <!-- 得分 --><br><span style="color: rgb(0, 0, 0);">Final
+                                Score:&nbsp;</span><span class="underline">{{ score }}</h1>
+                        <!-- 通關訊息 -->
+                        <h1 class="display-4 fw-bold mb-5">{{ message }}<br></h1>
+                        <div
+                            class="bg-light border rounded border-0 border-light d-flex flex-column justify-content-between flex-lg-row justify-content-xl-center p-4 p-md-5">
+                            <!-- 錯字訂正 -->
+                            <h2 class="fw-bold mb-2 a1" style="letter-spacing: 1.5px; text-align: left;">Correction of
+                                Incorrect Words:<br>
+                                <!-- 若有錯字，給錯字列表 -->
+                                {% if wrong_words %}
+                                <ul>
+                                    {% for word in wrong_words %}
+                                    <li style="list-style-type: upper-latin;">{{ word }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <!-- 若無錯字，給無錯字訊息 -->
+                                {% else %}
+                                <p>No wrong words.</p>
+                                {% endif %}
+                            </h2>
+                        </div>
+                        <!-- 再玩一次按鈕 -->
+                        <form class="d-flex justify-content-center flex-wrap" method="post"
+                            style="padding-top: 30px; padding-bottom: 15px;">
+                            <div class="shadow-lg mb-3"></div>
+                            <div class="shadow-lg mb-3">
+                                <button class="btn btn-primary" type="submit"
+                                    style="background: var(--bs-blue);border-color: var(--bs-blue);">Play Again</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-10 mx-auto">
+                    <div class="text-center position-relative"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 此處由 Bootstrap 產生 -->
+    <script src="js/main.js"></script>
 </body>
+
 </html>

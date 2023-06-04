@@ -3,28 +3,50 @@
     功能：拼字遊戲的歡迎頁面，用於向使用者介紹遊戲並提供開始遊戲的選項
 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Spelling Game - Welcome</title>
-    <style>
-        /* 在這裡放置你的 CSS 樣式 */
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Welcome</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-    <!-- 標題 -->
-    <h1>Spelling Game</h1>
-    <!-- 介紹文字 -->
-    <h2>This is an English spelling quiz.<br>
-        You need to spell the correct words based on the scrambled fruit English vocabulary.<br>
-        You can enter in either uppercase or lowercase, <br>
-        but please make sure you enter in half-width letters. <br>
-        There are a total of ten questions, <br>
-        and if you answer more than six correctly, you pass. <br>
-        Click the "Start!" button to begin the game.
-    </h2>
-    <!-- 開始遊戲按鈕 -->
-    <form method="POST">
-        <button type="submit">Start!</button>
-    </form>    
+    <section class="py-4 py-xl-5">
+        <div class="container">
+            <div class="text-center p-4 p-lg-5">
+                <!-- 標題 -->
+                <h1 class="display-4 fw-bold mb-5"><span style="color: rgb(0, 114, 198);">S</span><span
+                        style="color: rgb(0, 163, 221);">pelling</span><span style="color: rgb(0, 0, 0);"> </span><span
+                        style="color: rgb(0, 114, 198);">G</span><span style="color: rgb(0, 163, 221);">ame</span></h1>
+                <section class="py-4 py-xl-5">
+                    <div class="container">
+                        <div class="bg-light border rounded border-0 border-light d-flex flex-column justify-content-between flex-lg-row justify-content-xl-center p-4 p-md-5"
+                            style="margin-left: -30px; margin-right: -30px;">
+                            <!-- 介紹文字 -->
+                            <h2 class="fw-bold mb-2 a1" style="letter-spacing: 1.5px; text-align: left;">This is an
+                                English spelling quiz.
+                                You need to spell the correct words based on the scrambled fruit English vocabulary.
+                                You can enter in either uppercase or lowercase,
+                                but please make sure you enter in half-width letters.
+                                There are a total of ten questions,
+                                and if you answer more than six correctly, you pass.<br><span
+                                    style="color: #2c61ea;">Click the &quot;Start!&quot; button to begin the
+                                    game.</span></h2>
+                        </div>
+                    </div>
+                </section>
+                <form method="POST" style="padding-top: 15px;">
+                    <!-- 開始遊戲按鈕 -->
+                    <button class="btn btn-primary fs-5 me-2 py-2 px-4" data-bss-hover-animate="pulse" type="submit"
+                        style="background: linear-gradient(-45deg, var(--bs-blue), #005bbf 98%), var(--bs-blue);border-color: var(--bs-blue);">Start!</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- 此處由 Bootstrap 產生 -->
+    <script src="js/main.js"></script>
 </body>
+
 </html>
