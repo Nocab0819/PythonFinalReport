@@ -14,8 +14,6 @@
 """
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 import sqlite3
-import os
-import csv
 import random
 
 app = Flask(__name__)
@@ -195,10 +193,8 @@ def welcome():
             return redirect(url_for('game'))
         else:
             return redirect(url_for('welcome', error_message='Account error.'))
-    else:
-        session.clear()
-        error_message = request.args.get('error_message')
-        return render_template('welcome.html', error_message=error_message)
+        
+    return render_template('welcome.html', back_url=url_for('index'))
 
 def get_teacher_input_data(username):
     conn = sqlite3.connect('users.db')

@@ -1,4 +1,7 @@
-<!-- welcome.html -->
+<!-- 
+    檔名：welcome.html
+    功能：學生進行遊戲的歡迎頁面，包含規則說明。
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +52,8 @@
                         <li>{{ error_message }}</li>
                     </ul>
                 {% endif %}
+                <!-- 返回主頁按鈕 -->
+                <a href="{{ back_url }}" class="btn btn-secondary fs-5 py-2 px-4" style="margin-top: 15px;">Back to Home</a>
             </div>
         </div>
     </section>
