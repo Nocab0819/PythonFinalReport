@@ -1,65 +1,61 @@
-<!--        
+<!--     
     檔名：dashboard.html
     功能：教師管理平台，用於更新題庫。
-       -->
+    -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Teacher Management Interface</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-  </head>
-  <body>
-    <script src="js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <div class="d-block modal modal-sheet p-4 position-static py-md-5" tabindex="-1" role="dialog" id="modalTour">
-      <div role="document" class="modal-dialog">
-        <div class="modal-content rounded-4 shadow bg-light">
-          <small class="text-body-secondary" style="font-size: 22px;">
-            <div class="modal-body p-3">
-              {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                  <ul class="messages">
-                    {% for message in messages %}
-                      <h4><span>Info:</span><li>{{ message }}</li></h4>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              {% endwith %}
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Teacher Management Interface</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <script src="js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <div class="d-block modal modal-sheet p-4 position-static py-md-5" tabindex="-1" role="dialog" id="modalTour">
+            <div role="document" class="modal-dialog">
+                <div class="modal-content rounded-4 shadow bg-light"><small class="text-body-secondary" style="font-size: 22px;"> <div class="modal-body p-3">
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <h4><span>Info:</span><li>{{ message }}</li></h4>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                        </div> </small>
+                </div>
             </div>
-          </small>
+            <div role="document" class="modal-dialog">
+                <div class="modal-content rounded-4 shadow bg-light">
+                    <div class="modal-body p-5">
+                        <h1 class="fw-bold" style="font-size: 32px; text-align: center;">Teacher Management Interface</h1>
+                    </div>
+                    <div class="modal-body p-5 pt-2">
+                        <form action="{{ url_for('dashboard') }}" method="POST"><small class="text-body-secondary" style="font-size: 22px;"></small><small class="text-body-secondary" style="font-size: 22px;"><h4>Please enter English words separated by commas as the question bank:</h4></small>
+                            <div class="form-floating mb-4 mt-4">
+                                <input type="text" name="input_data" class="form-control rounded-3" id="input_data" placeholder="EnglishWords" required/>
+                                <label for="floatingInput">English words</label>
+                            </div>
+                            <button class="w-100 mb-4 btn btn-lg rounded-3 btn-primary" type="submit">Save</button>
+                            <div class="bd-example">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr></tr>
+                                    </thead>
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-primary">The current stored question bank:</a>
+                                        <a href="#" class="list-group-item list-group-item-action disabled" style="word-wrap:break-word;">{{ input_data }}</a>
+                                    </div>
+                                </table>
+                            </div>
+                        </form>
+                        <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3 mt-4" type="submit" onclick="{{ logout_url }}">Log out</button>
+                        <small class="text-body-secondary" style="font-size: 22px;"></small>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div role="document" class="modal-dialog">
-        <div class="modal-content rounded-4 shadow bg-light">
-          <div class="modal-body p-5">
-            <h1 class="fw-bold" style="font-size: 32px; text-align: center;">Teacher Management Interface</h1>
-          </div>
-          <div class="modal-body p-5 pt-2">
-            <form action="{{ url_for('dashboard') }}" method="POST">
-              <small class="text-body-secondary" style="font-size: 22px;"></small>
-              <small class="text-body-secondary" style="font-size: 22px;"><h4>Please enter English words separated by commas as the question bank:</h4></small>
-              <div class="form-floating mb-4 mt-4">
-                <input type="text" name="input_data" class="form-control rounded-3" id="input_data" placeholder="EnglishWords" required />
-                <label for="floatingInput">English words</label>
-              </div>
-              <button class="w-100 mb-4 btn btn-lg rounded-3 btn-primary" type="submit">Save</button>
-              <div class="bd-example">
-                <table class="table table-hover">
-                  <thead>
-                    <tr></tr>
-                  </thead>
-                  <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-primary">The current stored question bank:</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">{{ input_data }}</a>
-                  </div>
-                </table>
-              </div>
-            </form>
-            <button onclick="location.href='{{ logout_url }}'" class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3 mt-4" type="submit">Log out</button><small class="text-body-secondary" style="font-size: 22px;"></small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
