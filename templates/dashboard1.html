@@ -1,0 +1,35 @@
+<!-- 
+    檔名：dashboard.html
+    功能：教師管理平台，用於更新題庫。
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Management Interface</title>
+</head>
+<body>
+    <h1>Teacher Management Interface</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('dashboard') }}" method="POST">
+        <label for="input_data">Please enter English words separated by commas as the question bank:</label>
+        <input type="text" name="input_data" id="input_data" required>
+        <input type="submit" value="Save">
+    </form>
+    <div>
+        <h3>The current stored question bank:</h3>
+        <p>{{ input_data }}</p>
+    </div>
+
+    <a href="{{ logout_url }}">Log out</a>
+</body>
+</html>
