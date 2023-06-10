@@ -112,9 +112,11 @@ def login():
 
     return render_template('login.html', back_url=url_for('index'))
 
-# 檢查輸入是否為英文單字並以逗號隔開
+# 檢查輸入是否為英文單字並以逗號隔開，同時檢查是否輸入大於10個單字
 def validate_input(input_data):
     words = input_data.split(',')
+    if len(words) < 10:
+        return False
     for word in words:
         if not word.isalpha():
             return False
@@ -159,7 +161,7 @@ def dashboard():
 
             flash('Question bank saved successfully!')
         else:
-            flash('Please enter English words separated by commas.', 'error')
+            flash('Please enter the English words separated by commas, and please enter more than 10 words.', 'error')
         
         # 取得目前使用者資料庫中的 input_data
         conn = sqlite3.connect('users.db')
@@ -172,7 +174,6 @@ def dashboard():
         return render_template('dashboard.html', logout_url=url_for('index'), input_data=input_data)
 
     return render_template('dashboard.html', logout_url=url_for('index'))
-
 
 # 學生登入驗證
 def authenticate_teacher(username):
