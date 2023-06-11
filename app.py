@@ -182,7 +182,7 @@ def authenticate_teacher(username):
     c.execute("SELECT * FROM users WHERE username=?", (username,))
     result = c.fetchone()
     conn.close()
-    return result is not None
+    return result is not None or flash('Account error.', 'error')
 
 @app.route('/welcome', methods=['GET', 'POST'])
 def welcome():

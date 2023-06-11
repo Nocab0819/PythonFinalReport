@@ -31,22 +31,43 @@
                             </div>
                         </div>
                     </section>
-                    <form method="POST" style="padding-top: 15px;">
-                        <!-- 教師帳號輸入框 -->
-                        <label for="username" style="font-size: 1.8rem;">Teacher's ID:
+                    <div class="modal-content rounded-4 shadow bg-light">
+                        <small class="text-body-secondary" style="font-size: 22px;">
+                          <div class="modal-body p-3">
+                            <h4>
+                              <span>Info:</span>
+                              <!-- 帳號錯誤提示 -->
+                              {% with error_message = get_flashed_messages(with_categories=true) %}
+                                  {% if error_message %}
+                                      <ul class="messages">
+                                          {% for category, message in error_message %}
+                                              <li class="{{ category }}">{{ message }}</li>
+                                          {% endfor %}
+                                      </ul>
+                                  {% endif %}
+                              {% endwith %}
+                            </h4>
+                          </div>
+                        </small>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <form method="POST" style="padding-top: 15px;">
+                          <!-- 教師帳號輸入框 -->
+                          <div class="form-group text-center">
+                            <label for="username" style="font-size: 1.8rem;">Teacher's ID:</label>
                             <input type="text" class="form-control" id="username" name="username" required style="margin-top: 1.667rem; margin-bottom: 1.667rem; text-align: center;">
+                          </div>
+                          <!-- 開始遊戲按鈕 -->
+                          <div class="text-center">
                             <button class="btn btn-primary fs-5 px-4 py-2" data-bss-hover-animate="pulse" type="submit" style="background: linear-gradient(-45deg, var(--bs-blue), #005bbf 98%), var(--bs-blue);border-color: var(--bs-blue);">Start!</button>
-                        </label>
-                        <!-- 開始遊戲按鈕 -->
-                    </form>
-                    <a href="{{ back_url }}" class="btn btn-secondary fs-5 py-2 px-4" style="margin-top: 2.083rem;">Back to Home</a>
-                    <!-- 帳號錯誤提示 -->
-                    {% if error_message %}
-                    <ul class="messages">
-                        <li>{{ error_message }}</li>
-                    </ul>
-                    {% endif %}
-                    <!-- 返回主頁按鈕 -->
+                          </div>
+                        </form>
+                    </div>
+                    <div class="d-flex justify-content-center">           
+                        <!-- 返回主頁按鈕 -->
+                        <a href="{{ back_url }}" class="btn btn-secondary fs-5 py-2 px-4" style="margin-top: 2.083rem;">Back to Home</a>
+                    </div>
                 </div>
             </div>
         </section>
